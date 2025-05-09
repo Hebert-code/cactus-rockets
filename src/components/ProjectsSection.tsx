@@ -65,7 +65,7 @@ const ProjectsSection = () => {
     : projects.filter(p => p.category === activeCategory);
 
     return(
-        <section id="projetos" className="bg-background text-white p-24">
+        <section id="projetos" className="bg-[linear-gradient(to_bottom,_#0A3622,_#080808)] text-white p-24">
             <div className="container mx-auto px-4">
                 <div className="max-w-3xl mx-auto text-center mb-16">
                     <h2 className="font-Poppins font-bold text-3xl md:text-4xl text-white mb-4 relative">

@@ -27,7 +27,7 @@ const AboutSection = () =>{
     ];
 
     return(
-        <section id="quem-somos" className=" p-24 bg-gradient-to-b from-background to-primary/60">
+        <section id="quem-somos" className="p-24 bg-[linear-gradient(to_bottom,_#080808,_#0A3622)]">
             <div className="container mx-auto container-padding">
                 
                 <div className="max-w-3xl mx-auto text-center mb-16">

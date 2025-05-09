@@ -29,7 +29,7 @@ const HeroSection = () => {
     return (
       <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-cosmic-black overflow-hidden">
           {/* Stars background */}
-          <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 z-0 pointer-events-none">
             {stars.map((star) => (
               <div
                 key={star.id}
@@ -70,7 +70,19 @@ const HeroSection = () => {
               <button className="inline-flex items-center justify-center bg-light hover:bg-secondary/80 px-4 py-2 font-medium text-black transform hover:scale-105 transition-all shadow-dark rounded-lg">
                 Nossos Projetos
               </button>
-              <button className="border-secondary text-secondary hover:bg-secondary/20 transition-all transform hover:scale-105 shadow-dark">
+              <button
+                className="
+                  inline-flex items-center justify-center gap-2 text-sm font-medium
+                  border border-green-500 text-green-500 bg-[#041b10] 
+                  h-11 rounded-md px-8 transition-all duration-200
+                  hover:shadow-[0_0_10px_rgba(76,175,80,0.4)] 
+                  hover:border-white
+                  hover:text-white
+                  transform hover:scale-105 
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2
+                  disabled:pointer-events-none disabled:opacity-50
+                "
+              >
                 Conheça-nos
               </button>
             </div>
