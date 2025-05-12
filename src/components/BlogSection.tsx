@@ -1,6 +1,22 @@
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import BlogCard from "./ui/BlogCard";
+import SectionTitle from "./ui/SectionTitle";
+import BlogDetails from "./ui/BlogDetails"; // certifique-se de que o caminho está correto
+
+interface BlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  date: string;
+  image: string;
+  category: string;
+}
 
 const BlogSection = () => {
+  const [showAll, setShowAll] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [expandedPost, setExpandedPost] = useState<BlogPost | null>(null);
 
   const blogPosts = [
     {
@@ -26,33 +42,66 @@ const BlogSection = () => {
       date: "12 Dez 2022",
       image: "/placeholder.svg",
       category: "Tecnologia"
+    },
+    {
+      id: 4,
+      title: "Participação na feira de ciências regional",
+      excerpt: "Levamos nossos projetos para a feira de ciências e inspiramos jovens da região a explorarem o espaço.",
+      date: "05 Nov 2022",
+      image: "/placeholder.svg",
+      category: "Eventos"
     }
   ];
+
+  const visiblePosts = showAll ? blogPosts : blogPosts.slice(0, 3);
+
+  const handleToggle = () => {
+    setShowAll(prev => {
+      const newState = !prev;
+      if (!newState && sectionRef.current) {
+        sectionRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+      return newState;
+    });
+  };
 
   return (
     <section
       id="blog"
-      className="p-24 text-white bg-[linear-gradient(to_bottom,_#0A3622,_#080808)]"
+      ref={sectionRef}
+      className="px-4 py-16 sm:px-8 sm:py-20 lg:px-24 lg:py-24 text-white bg-[linear-gradient(to_bottom,_#0A3622,_#080808)]"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="font-Poppins font-bold text-3xl md:text-4xl mb-4 relative">
-            <span className="relative z-10">Blog e Notícias</span>
-            <div className="absolute w-20 h-1 bg-secondary bottom-0 left-1/2 transform -translate-x-1/2 mt-5" />
-          </h2>
-          <p className="text-gray-300 mt-8">
-            Acompanhe as últimas novidades, eventos e conquistas do Cactus Rockets Design.
-          </p>
-        </div>
+      <div className="w-full max-w-7xl mx-auto">
+        <SectionTitle 
+          title="Blog e Notícias"
+          subtitle="Acompanhe as últimas novidades, eventos e conquistas do Cactus Rockets Design."
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
-            <BlogCard key={post.id} {...post} />
-          ))}
-        </div>
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <AnimatePresence initial={false}>
+            {visiblePosts.map((post) => (
+              <motion.div
+                key={post.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => setExpandedPost(post)}
+                className="cursor-pointer"
+              >
+                <BlogCard {...post} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
         <div className="text-center mt-12">
           <button
+            onClick={handleToggle}
             className="
               inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium
               ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2
@@ -62,10 +111,18 @@ const BlogSection = () => {
               hover:bg-secondary hover:text-black transform hover:scale-105 transition-colors duration-200
             "
           >
-            Ver todas as publicações
+            {showAll ? "Ver menos" : "Ver todas as publicações"}
           </button>
         </div>
       </div>
+
+      {/* Detalhes do post */}
+      {expandedPost && (
+        <BlogDetails
+          post={expandedPost}
+          close={() => setExpandedPost(null)}
+        />
+      )}
     </section>
   );
 };

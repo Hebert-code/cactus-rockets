@@ -42,4 +42,33 @@ body{
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
   }
 
+.swiper-button-next,
+.swiper-button-prev {
+  color: #3bbf3f !important;
+  width: 2rem !important;
+  height: 2rem !important;
+}
 
+@media (max-width: 640px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+}
+
+.swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important;
+  width: 8px !important;
+  height: 8px !important;
+  margin: 0 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #3bbf3f !important;
+  pad: 50px !important;
+  width: 10px !important;
+  height: 10px !important;
+}

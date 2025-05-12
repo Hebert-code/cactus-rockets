@@ -1,109 +1,86 @@
-import { Linkedin } from "lucide-react";
+import { Rocket, Menu, X, MessageCircle } from "lucide-react";
+import useMobileMenu from "../hooks/useMobileMenu";
+import Button from "./ui/Button";
 
-const TeamSection = () => {
-  const teamMembers = [
-    { name: "Nicole", role: "Coordenadora Geral", image: "/placeholder.svg", linkedin: "https://www.linkedin.com/in/maria-nicolle/" },
-    { name: "Carlos Oliveira", role: "Engenheiro Aeroespacial", image: "/placeholder.svg", linkedin: "https://linkedin.com" },
-    { name: "Marina Costa", role: "Designer de Estruturas", image: "/placeholder.svg", linkedin: "https://linkedin.com" },
-    { name: "Roberto Santos", role: "Especialista em Propulsão", image: "/placeholder.svg", linkedin: "https://linkedin.com" },
-    { name: "Juliana Mendes", role: "Desenvolvedora de Sistemas", image: "/placeholder.svg", linkedin: "https://linkedin.com" },
-    { name: "Paulo Ferreira", role: "Técnico de Eletrônica", image: "/placeholder.svg", linkedin: "https://linkedin.com" },
-    { name: "Fernanda Lima", role: "Analista de Dados", image: "/placeholder.svg", linkedin: "https://linkedin.com" },
-    { name: "Miguel Souza", role: "Engenheiro de Software", image: "/placeholder.svg", linkedin: "https://linkedin.com" },
+const NavBar = () => {
+  const menuItems = [
+    { label: "Início", href: "#inicio" },
+    { label: "Quem Somos", href: "#quem-somos" },
+    { label: "Projetos", href: "#projetos" },
+    { label: "Equipe", href: "#equipe" },
+    { label: "Blog", href: "#blog" },
+    { label: "Contato", href: "#contato" }
   ];
 
+  const { isOpen, toggleMenu, closeMenu } = useMobileMenu();
+
   return (
-    <section
-      id="equipe"
-      className="p-24 text-white bg-[linear-gradient(to_top,_#0A3622,_#080808)]"
-    >
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="font-Poppins font-bold text-3xl md:text-4xl mb-4 relative">
-            <span className="relative z-10">Nossa Equipe</span>
-            <div className="absolute w-20 h-1 bg-secondary bottom-0 left-1/2 transform -translate-x-1/2 mt-5" />
-          </h2>
-          <p className="text-gray-300 mt-8">
-            Conheça os talentosos estudantes e professores que compõem nossa equipe multidisciplinar.
-          </p>
+    <nav className="fixed top-0 left-0 w-full bg-cosmic-black/95 bg-opacity-80 backdrop-blur-md z-50 shadow-md">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between text-white">
+        <div className="flex items-center space-x-2">
+          <Rocket className="h-5 w-5 sm:h-6 sm:w-6 text-secondary" />
+          <span className="font-Poppins font-bold text-lg sm:text-xl text-white">
+            CACTUS ROCKETS
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-          {teamMembers.map((member, index) => (
-            <div
-              key={index}
-              className="
-                group
-                relative
-                bg-[rgba(0,0,0,0.8)]
-                backdrop-blur-sm
-                border-2 border-transparent
-                rounded-lg
-                overflow-hidden
-                transition-all duration-300
-                hover:-translate-y-1
-                hover:border-green-500
-                hover:shadow-[0_0_15px_rgba(34,197,94,0.4)]
-              "
-            >
-              <div className="h-56 bg-cosmic-darkgray overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-t from-cosmic-black to-transparent z-10" />
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute top-0 right-0 bg-secondary/80 text-cosmic-black text-xs font-medium py-1 px-2 z-20">
-                  {member.role.split(" ")[0]}
-                </div>
-              </div>
-              <div className="p-4 text-center relative">
-                <h4 className="font-Poppins font-semibold text-lg mb-1">
-                  {member.name}
-                </h4>
-                <p className="text-gray-400 text-sm mb-3">{member.role}</p>
+        {/* Desktop Menu + Botão */}
+        <div className="hidden lg:flex items-center gap-7">
+          <ul className="flex gap-8 font-medium">
+            {menuItems.map(({ label, href }) => (
+              <li key={href}>
                 <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-                    inline-flex items-center justify-center
-                    w-8 h-8
-                    bg-cosmic-black text-secondary
-                    border border-secondary/30
-                    rounded-full
-                    transition-colors
-                    hover:bg-secondary hover:text-black
-                  "
+                  href={href}
+                  className="font-medium cursor-pointer text-sm text-gray-300 hover:text-secondary transition-colors"
                 >
-                  <Linkedin size={16} />
+                  {label}
                 </a>
-              </div>
-            </div>
-          ))}
+              </li>
+            ))}
+          </ul>
+          <Button icon={<MessageCircle size={16} />} variant="primary">
+            Fale Conosco
+          </Button>
         </div>
 
-        <div className="mt-16 text-center">
-          <div className="black-divider mb-6" />
-          <p className="text-gray-300 mb-6">
-            Interessado em fazer parte da nossa equipe? Estamos sempre abertos a novos talentos!
-          </p>
-          <a
-            href="#contato"
-            className="
-              inline-block
-              bg-secondary hover:bg-secondary/80
-              text-cosmic-black font-medium
-              py-3 px-8 rounded-md
-              transition-transform transform hover:scale-105 shadow-dark
-            "
-          >
-            Entre em Contato
-          </a>
+        {/* Mobile Toggle Button */}
+        <div className="lg:hidden">
+          <button onClick={toggleMenu}>
+            {isOpen ? (
+              <X className="h-6 w-6 text-light" />
+            ) : (
+              <Menu className="h-6 w-6 text-light" />
+            )}
+          </button>
         </div>
       </div>
-    </section>
+
+      {/* Mobile Menu Dropdown */}
+      {isOpen && (
+        <ul className="lg:hidden absolute top-full left-0 w-full bg-black bg-opacity-90 flex flex-col items-center gap-4 py-4 z-40 shadow-md transition-all">
+          {menuItems.map(({ label, href }) => (
+            <li key={href}>
+              <a
+                href={href}
+                onClick={closeMenu}
+                className="block text-white text-base font-medium hover:text-secondary transition"
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+          <Button
+            onClick={closeMenu}
+            variant="primary"
+            size="md"
+            icon={<MessageCircle size={16} />}
+          >
+            Fale Conosco
+          </Button>
+        </ul>
+      )}
+    </nav>
   );
 };
 
-export default TeamSection;
+export default NavBar;
