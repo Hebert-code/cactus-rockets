@@ -1,86 +1,135 @@
-import { Rocket, Menu, X, MessageCircle } from "lucide-react";
-import useMobileMenu from "../hooks/useMobileMenu";
-import Button from "./ui/Button";
+import { Linkedin } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { teamMembers } from "@/data/team";
+import SectionTitle from "./ui/SectionTitle";
+import StarBackground from "./ui/StarBackground";
 
-const NavBar = () => {
-  const menuItems = [
-    { label: "Início", href: "#inicio" },
-    { label: "Quem Somos", href: "#quem-somos" },
-    { label: "Projetos", href: "#projetos" },
-    { label: "Equipe", href: "#equipe" },
-    { label: "Blog", href: "#blog" },
-    { label: "Contato", href: "#contato" }
-  ];
-
-  const { isOpen, toggleMenu, closeMenu } = useMobileMenu();
-
+const TeamSection = () => {
   return (
-    <nav className="fixed top-0 left-0 w-full bg-cosmic-black/95 bg-opacity-80 backdrop-blur-md z-50 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between text-white">
-        <div className="flex items-center space-x-2">
-          <Rocket className="h-5 w-5 sm:h-6 sm:w-6 text-secondary" />
-          <span className="font-Poppins font-bold text-lg sm:text-xl text-white">
-            CACTUS ROCKETS
-          </span>
-        </div>
+    <section
+      id="equipe"
+      className="relative py-20 px-4 sm:px-6 lg:px-24 text-white bg-[linear-gradient(to_top,_#0A3622,_#080808)]"
+    >
+      <StarBackground/>
+      <div className="max-w-7xl mx-auto">
+        <SectionTitle
+          title="Nossa Equipe"
+          subtitle="Conheça os talentosos estudantes e professores que compõem nossa equipe multidisciplinar."
+        />
 
-        {/* Desktop Menu + Botão */}
-        <div className="hidden lg:flex items-center gap-7">
-          <ul className="flex gap-8 font-medium">
-            {menuItems.map(({ label, href }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  className="font-medium cursor-pointer text-sm text-gray-300 hover:text-secondary transition-colors"
+        <div className="relative">
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={24}
+            navigation
+            pagination={{ clickable: true }}
+            breakpoints={{
+              320: { slidesPerView: 1 },
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+              1280: { slidesPerView: 4 },
+            }}
+            className="
+              [&_.swiper-button-next]:!text-green-400 
+              [&_.swiper-button-prev]:!text-green-400
+                [&_.swiper-button-next]:!top-1/2 
+                [&_.swiper-button-prev]:!top-1/2
+                [&_.swiper-button-next]:!right-0 
+                [&_.swiper-button-prev]:!left-0
+                [&_.swiper-button-next]:!w-8 
+                [&_.swiper-button-prev]:!w-8
+                [&_.swiper-button-next]:!h-8 
+                [&_.swiper-button-prev]:!h-8
+                [&_.swiper-button-next]:!rounded-full 
+                [&_.swiper-button-prev]:!rounded-full
+                [&_.swiper-button-next]:!z-30 
+                [&_.swiper-button-prev]:!z-30"
+          >
+            {teamMembers.map((member, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  className="
+                    group relative h-full flex flex-col
+                    bg-[rgba(0,0,0,0.8)] backdrop-blur-sm
+                    rounded-lg overflow-hidden
+                    transition-all duration-300
+                    hover:-translate-y-1
+                    hover:shadow-[0_0_15px_rgba(34,197,94,0.4)]
+                    ring-1 ring-transparent hover:ring-green-500
+                  "
                 >
-                  {label}
-                </a>
-              </li>
+                  <div className="h-60 sm:h-64 md:h-72 lg:h-56 bg-cosmic-darkgray overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 z-0"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-cosmic-black to-transparent pointer-events-none z-10" />
+                    <div className="absolute top-0 right-0 bg-secondary/80 text-cosmic-black text-xs font-medium py-1 px-2 z-20">
+                      {member.role.split(" ")[0]}
+                    </div>
+                  </div>
+                  <div className="p-4 text-center flex-1 flex flex-col justify-between items-center">
+                    <div>
+                      <h4 className="font-Poppins font-semibold text-lg mb-1">{member.name}</h4>
+                      <p className="text-gray-400 text-sm mb-3">{member.role}</p>
+                    </div>
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                        inline-flex items-center justify-center
+                        w-8 h-8
+                        bg-cosmic-black text-secondary
+                        border border-secondary/30
+                        rounded-full
+                        transition-colors
+                        hover:bg-secondary hover:text-black
+                      "
+                    >
+                      <Linkedin size={16} />
+                    </a>
+                  </div>
+                </div>
+              </SwiperSlide>
             ))}
-          </ul>
-          <Button icon={<MessageCircle size={16} />} variant="primary">
-            Fale Conosco
-          </Button>
+          </Swiper>
         </div>
 
-        {/* Mobile Toggle Button */}
-        <div className="lg:hidden">
-          <button onClick={toggleMenu}>
-            {isOpen ? (
-              <X className="h-6 w-6 text-light" />
-            ) : (
-              <Menu className="h-6 w-6 text-light" />
-            )}
-          </button>
+        <div className="mt-16 text-center">
+          <div className="black-divider mb-6" />
+          <p className="text-gray-300 mb-6">
+            Interessado em fazer parte da nossa equipe? Estamos sempre abertos a novos talentos!
+          </p>
+          <a
+            href="#contato"
+            onClick={(e) => {
+              e.preventDefault();
+              const section = document.querySelector("#contato");
+              if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="
+              cursor-pointer
+              inline-block
+              bg-secondary hover:bg-secondary/80
+              text-cosmic-black font-medium
+              py-3 px-8 rounded-md
+              transition-transform transform hover:scale-105 shadow-dark
+            "
+          >
+            Entre em Contato
+          </a>
         </div>
       </div>
-
-      {/* Mobile Menu Dropdown */}
-      {isOpen && (
-        <ul className="lg:hidden absolute top-full left-0 w-full bg-black bg-opacity-90 flex flex-col items-center gap-4 py-4 z-40 shadow-md transition-all">
-          {menuItems.map(({ label, href }) => (
-            <li key={href}>
-              <a
-                href={href}
-                onClick={closeMenu}
-                className="block text-white text-base font-medium hover:text-secondary transition"
-              >
-                {label}
-              </a>
-            </li>
-          ))}
-          <Button
-            onClick={closeMenu}
-            variant="primary"
-            size="md"
-            icon={<MessageCircle size={16} />}
-          >
-            Fale Conosco
-          </Button>
-        </ul>
-      )}
-    </nav>
+    </section>
   );
 };
 
-export default NavBar;
+export default TeamSection;

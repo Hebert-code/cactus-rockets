@@ -8,10 +8,16 @@ const NavBar = () => {
     { label: "Projetos", href: "#projetos" },
     { label: "Equipe", href: "#equipe" },
     { label: "Blog", href: "#blog" },
-    { label: "Contato", href: "#contato" }
   ];
 
   const { isOpen, toggleMenu, closeMenu } = useMobileMenu();
+
+  const handleScroll = (href: string) => {
+    const section = document.querySelector(href);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-cosmic-black/95 bg-opacity-80 backdrop-blur-md z-50 shadow-md">
@@ -28,16 +34,19 @@ const NavBar = () => {
           <ul className="flex gap-8 font-medium">
             {menuItems.map(({ label, href }) => (
               <li key={href}>
-                <a
-                  href={href}
+                <button
+                  onClick={() => handleScroll(href)}
                   className="font-medium cursor-pointer text-sm text-gray-300 hover:text-secondary transition-colors"
                 >
                   {label}
-                </a>
+                </button>
               </li>
             ))}
           </ul>
-          <button className="inline-flex items-center justify-center bg-light hover:bg-secondary/80 px-4 py-2 font-medium text-black transform hover:scale-105 transition-all shadow-dark rounded-lg">
+          <button
+            onClick={() => handleScroll("#contato")}
+            className="inline-flex items-center justify-center bg-light hover:bg-secondary/80 px-4 py-2 font-medium text-black transform hover:scale-105 transition-all shadow-dark rounded-lg"
+          >
             Fale Conosco
           </button>
         </div>
@@ -59,17 +68,22 @@ const NavBar = () => {
         <ul className="lg:hidden absolute top-full left-0 w-full bg-black bg-opacity-90 flex flex-col items-center gap-4 py-4 z-40 shadow-md transition-all">
           {menuItems.map(({ label, href }) => (
             <li key={href}>
-              <a
-                href={href}
-                onClick={closeMenu}
+              <button
+                onClick={() => {
+                  handleScroll(href);
+                  closeMenu();
+                }}
                 className="block text-white text-base font-medium hover:text-secondary transition"
               >
                 {label}
-              </a>
+              </button>
             </li>
           ))}
           <button
-            onClick={closeMenu}
+            onClick={() => {
+              handleScroll("#contato");
+              closeMenu();
+            }}
             className="mt-2 inline-flex items-center justify-center bg-light hover:bg-secondary/80 px-4 py-2 font-medium text-black transform hover:scale-105 transition-all shadow-dark rounded-lg"
           >
             Fale Conosco

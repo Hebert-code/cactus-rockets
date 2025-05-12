@@ -1,17 +1,14 @@
-import { Rocket } from "lucide-react";
+import { Rocket, ArrowDown } from "lucide-react";
 import StarBackground from "./ui/StarBackground";
 import Button from "./ui/Button";
-import { useRef } from "react";
 
 const HeroSection = () => {
 
-  const projetosRef = useRef<HTMLElement | null>(null);
-
-  const scrollToProjetos = () => {
-    projetosRef.current?.scrollIntoView({
-      behavior: "smooth", // Animação suave
-      block: "start",     // Alinha o início da seção
-    });
+  const handleScroll = (href: string) => {
+    const section = document.querySelector(href);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -21,20 +18,11 @@ const HeroSection = () => {
     >
       <StarBackground />
 
-      {/* Elementos animados de fundo */}
-      <div className="absolute top-32 left-10 w-16 h-16 bg-cosmic-black rounded-full animate-float z-0"></div>
-      <div
-        className="absolute bottom-20 right-20 w-32 h-32 bg-cosmic-black rounded-full animate-float z-0"
-        style={{ animationDelay: "1s" }}
-      ></div>
-      <div
-        className="absolute top-1/4 right-1/4 w-24 h-24 hexagon bg-cosmic-black animate-float z-0"
-        style={{ animationDelay: "2s" }}
-      ></div>
-      <div
-        className="absolute bottom-40 left-1/3 w-36 h-36 hexagon border border-light/20 animate-rotate z-0"
-        style={{ animationDelay: "3s" }}
-      ></div>
+    <div className="absolute top-32 left-10 w-16 h-16 bg-cosmic-black rounded-full animate-float z-0"></div>
+    <div className="absolute bottom-20 right-20 w-32 h-32 bg-cosmic-black rounded-full animate-float z-0" style={{ animationDelay: "1s" }}></div>
+    <div className="absolute top-1/4 right-1/4 w-24 h-24 hexagon bg-cosmic-black animate-float z-0" style={{ animationDelay: "2s" }}></div>
+    <div className="absolute bottom-40 left-1/3 w-36 h-36 hexagon border border-light/20 animate-rotate z-0" style={{ animationDelay: "3s" }}></div>
+
 
       {/* Conteúdo principal */}
       <div className="w-full max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-2 lg:gap-8 items-center justify-center gap-8 z-10 text-center lg:text-left">
@@ -62,13 +50,18 @@ const HeroSection = () => {
 
             {/* Botões */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-6">
-              <Button size="lg" variant="primary" onClick={scrollToProjetos}>
+              <Button
+                size="lg"
+                variant="primary"
+                onClick={() => handleScroll("#projetos")}
+              >
                 Nossos Projetos
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="border-green-500 text-green-500 bg-[#041b10] hover:border-white hover:text-white"
+                onClick={() => handleScroll("#quem-somos")}
               >
                 Conheça-nos
               </Button>
@@ -82,7 +75,7 @@ const HeroSection = () => {
             <div className="w-72 h-72 md:w-96 md:h-96 lg:w-112 lg:h-112 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-light to-cosmic-black rounded-full opacity-30 animate-pulse"></div>
               <div className="absolute inset-4 bg-gradient-to-tr from-cosmic-black to-light rounded-full flex items-center justify-center">
-                <Rocket size={96} className="text-white transform -rotate-45" />
+                <Rocket size={96} className="text-white transform -rotate-45 animate-lift-off" />
               </div>
               <div className="absolute inset-0 border-4 border-white/10 rounded-full shadow-dark"></div>
             </div>
@@ -90,6 +83,11 @@ const HeroSection = () => {
               Desde 2019
             </div>
           </div>
+        </div>
+      </div>
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10 mb-25">
+        <div className="text-secondary opacity-60 font-bold animation-bounceDown">
+          <ArrowDown />
         </div>
       </div>
     </section>

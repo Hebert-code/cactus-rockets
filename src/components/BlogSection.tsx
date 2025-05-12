@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import BlogCard from "./ui/BlogCard";
 import SectionTitle from "./ui/SectionTitle";
 import BlogDetails from "./ui/BlogDetails"; // certifique-se de que o caminho está correto
+import { blogPosts } from "@/data/blog";
+import StarBackground from "./ui/StarBackground";
+
 
 interface BlogPost {
   id: number;
@@ -17,41 +20,6 @@ const BlogSection = () => {
   const [showAll, setShowAll] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [expandedPost, setExpandedPost] = useState<BlogPost | null>(null);
-
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Lançamento do foguete Caatinga na competição nacional",
-      excerpt: "Detalhes sobre nosso mais recente lançamento e os resultados obtidos na competição nacional de foguetes.",
-      date: "15 Mar 2023",
-      image: "/placeholder.svg",
-      category: "Competição"
-    },
-    {
-      id: 2,
-      title: "Oficina de propulsão para estudantes do ensino médio",
-      excerpt: "Evento realizado no campus da UNIVASF com alunos do ensino médio para demonstração de princípios de propulsão.",
-      date: "28 Jan 2023",
-      image: "/placeholder.svg",
-      category: "Extensão"
-    },
-    {
-      id: 3,
-      title: "Desenvolvimento do novo sistema de telemetria",
-      excerpt: "Detalhes técnicos sobre o novo sistema de telemetria em desenvolvimento pela nossa equipe de eletrônica.",
-      date: "12 Dez 2022",
-      image: "/placeholder.svg",
-      category: "Tecnologia"
-    },
-    {
-      id: 4,
-      title: "Participação na feira de ciências regional",
-      excerpt: "Levamos nossos projetos para a feira de ciências e inspiramos jovens da região a explorarem o espaço.",
-      date: "05 Nov 2022",
-      image: "/placeholder.svg",
-      category: "Eventos"
-    }
-  ];
 
   const visiblePosts = showAll ? blogPosts : blogPosts.slice(0, 3);
 
@@ -69,8 +37,9 @@ const BlogSection = () => {
     <section
       id="blog"
       ref={sectionRef}
-      className="px-4 py-16 sm:px-8 sm:py-20 lg:px-24 lg:py-24 text-white bg-[linear-gradient(to_bottom,_#0A3622,_#080808)]"
+      className="relative px-4 py-16 sm:px-8 sm:py-20 lg:px-24 lg:py-24 text-white bg-[linear-gradient(to_bottom,_#0A3622,_#080808)]"
     >
+      <StarBackground/>
       <div className="w-full max-w-7xl mx-auto">
         <SectionTitle 
           title="Blog e Notícias"

@@ -126,7 +126,12 @@ const ContactSection = () => {
                                         <div className="flex-shrink-0 bg-muted/30 p-3 rounded-full border border-white/10">
                                             <Mail className="h-6 w-6 text-secondary" />
                                         </div>
-
+                                        <div className="ml-4">
+                                            <h4 className="font-medium text-white">Email</h4>
+                                                <p className="text-gray-300 mt-1 break-all">
+                                                    cactusrockets@univasf.edu.br
+                                                </p>
+                                        </div>
                                     </div>
 
                                     <div className="flex items-start">
@@ -179,7 +184,7 @@ const ContactSection = () => {
                                 <div className="absolute inset-0 bg-muted/30 backdrop-blur-sm group-hover:opacity-0 transition-opacity duration-300"></div>
                                 <p className="text-gray-400 font-medium z-10 group-hover:opacity-0 transition-opacity duration-300">Mapa do Local</p>
                                 <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.2417960048695!2d-40.53429132589503!3d-9.400951791058267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7735226877b09af%3A0x3bb83e09a1e9f0e2!2sUniversidade%20Federal%20do%20Vale%20do%20S%C3%A3o%20Francisco%20-%20Campus%20Juazeiro!5e0!3m2!1spt-BR!2sbr!4v1714584949682!5m2!1spt-BR!2sbr"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3741.334680382746!2d-40.51809105695272!3d-9.413583215283854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7737101c85e67c7%3A0xdd74eef9bcbe54a6!2sBiblioteca%20da%20UNIVASF!5e1!3m2!1spt-BR!2sbr!4v1747012848971!5m2!1spt-BR!2sbr"
                                     className="absolute inset-0 w-full h-full border-0 z-0"
                                     allowFullScreen={false}
                                     loading="lazy"
